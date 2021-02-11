@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 
 from settings import Settings
@@ -28,6 +27,12 @@ class AlienInvasion:
 			self._check_events()
 			self.ship.update()
 			self.bullets.update()
+
+			# Get rid of bullets that have disappeared.
+			for bullet in self.bullets.copy():
+				if bullet.rect.bottom <= 0:
+					self.bullets.remove(bullet)
+			print(len(self.bullets))
 			self._update_screen()
 
 	def _check_events(self):
@@ -62,11 +67,6 @@ class AlienInvasion:
 		"""Create a new bullet and add it to the bllets group."""
 		new_bullet = Bullet(self)
 		self.bullets.add(new_bullet)
-		
-		# Move the ship to the right.
-		self.ship.rect.x += 1 
-		# Make the most recently drawn screen visible.
-		pygame.display.flip()
 
 
 	def _update_screen(self):
@@ -75,6 +75,9 @@ class AlienInvasion:
 		self.ship.blitme()
 		for bullet in self.bullets.sprites():
 			bullet.draw_bullet()
+
+		# Make the most recently drawn screen visible.
+		pygame.display.flip()
 
 if __name__ == '__main__':
 	# Make a game instance and run the game.
