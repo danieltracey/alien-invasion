@@ -7,6 +7,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien 
 
+
 class AlienInvasion:
 	"""Overall class to manage game assets and behaviour."""
 
@@ -119,6 +120,13 @@ class AlienInvasion:
 
 	def _check_fleet_edges(self):
 		"""Respond appropriately if any aliens have reached an edge."""
+		for alien in self.aliens.sprites():
+				if alien.check_edges():
+					self._change_fleet_direction()
+					break
+
+	def _change_fleet_direction(self):
+		"""Drop the entire fleet and change the fleet's direction."""
 		for alien in self.aliens.sprites():
 			alien.rect.y += self.settings.fleet_drop_speed
 		self.settings.fleet_direction *= -1
