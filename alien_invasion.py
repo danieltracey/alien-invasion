@@ -92,6 +92,11 @@ class AlienInvasion:
 		"""
 		self._check_fleet_edges()
 		self.aliens.update()
+		if not self.aliens:
+			# Destroy existing bullets and creat new fleet.
+			self.bullets.empty()
+			self._create_fleet()
+
 
 	def _create_fleet(self):
 		"""Create the fleet of aliens."""
